@@ -27,10 +27,11 @@
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(4px);
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  z-index: 99999;
+  z-index: 999999 !important;
   padding: 20px;
+  padding-bottom: 60px;
 }
 
 .qrContent {
@@ -41,7 +42,8 @@
   width: 100%;
   position: relative;
   box-shadow: var(--shadow-xl);
-  z-index: 100000;
+  z-index: 1000000 !important;
+  margin-bottom: 20px;
 }
 
 .closeButton {
