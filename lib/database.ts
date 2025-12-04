@@ -15,11 +15,11 @@ function getPool(): Pool {
       },
       max: 20,
       idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 2000,
+      connectionTimeoutMillis: 10000, // Увеличено до 10 секунд
     })
 
-    // Initialize tables on first connection
-    initializeTables()
+    // Initialize tables on first connection (async, but don't wait)
+    initializeTables().catch(err => console.error('Error initializing tables:', err))
   }
   return pool
 }
@@ -89,7 +89,7 @@ async function initializeTables() {
         application_method TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
-    `)
+    `).catch(() => {}) // Игнорируем ошибки если таблица уже существует
 
     // Map data table
     await query(`
@@ -244,4 +244,4 @@ export async function closeDatabase() {
 }
 
 // Export query function for use in API routes
-export { query }
+export { query, initializeTables }
