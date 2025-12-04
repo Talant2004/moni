@@ -191,6 +191,57 @@ async function initializeTables() {
       )
     `)
 
+    // Methods table
+    await query(`
+      CREATE TABLE IF NOT EXISTS methods (
+        id SERIAL PRIMARY KEY,
+        name TEXT NOT NULL,
+        name_kk TEXT,
+        description TEXT,
+        description_kk TEXT,
+        video_url TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `)
+
+    // Method links table
+    await query(`
+      CREATE TABLE IF NOT EXISTS method_links (
+        id SERIAL PRIMARY KEY,
+        method_id INTEGER REFERENCES methods(id),
+        title TEXT,
+        url TEXT
+      )
+    `)
+
+    // Method photos table
+    await query(`
+      CREATE TABLE IF NOT EXISTS method_photos (
+        id SERIAL PRIMARY KEY,
+        method_id INTEGER REFERENCES methods(id),
+        photo_path TEXT
+      )
+    `)
+
+    // Map layers table
+    await query(`
+      CREATE TABLE IF NOT EXISTS map_layers (
+        id SERIAL PRIMARY KEY,
+        name TEXT NOT NULL,
+        name_kk TEXT,
+        layer_type TEXT NOT NULL,
+        year INTEGER,
+        season TEXT,
+        visible BOOLEAN DEFAULT false,
+        color TEXT DEFAULT '#00FF00',
+        opacity DOUBLE PRECISION DEFAULT 0.7,
+        animation_start DATE,
+        animation_end DATE,
+        kml_data TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `)
+
     // Insert sample data if tables are empty
     const invasionCount = await query('SELECT COUNT(*) as count FROM invasions')
     if (parseInt(invasionCount.rows[0].count) === 0) {

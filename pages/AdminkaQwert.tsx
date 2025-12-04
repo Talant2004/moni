@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../components/Layout'
 import styles from '../styles/Admin.module.css'
 import dynamic from 'next/dynamic'
+import AdminList from '../components/admin/AdminList'
 
 // Dynamic imports для избежания SSR проблем
 const InvasionForm = dynamic(() => import('../components/admin/InvasionForm'), { ssr: false })
@@ -49,10 +50,59 @@ export default function AdminPanel() {
         </div>
 
         <div className={styles.content}>
-          {activeTab === 'invasions' && <InvasionForm />}
-          {activeTab === 'maps' && <MapForm />}
-          {activeTab === 'preparations' && <PreparationForm />}
-          {activeTab === 'methods' && <MethodForm />}
+          {activeTab === 'invasions' && (
+            <>
+              <InvasionForm />
+              <AdminList
+                endpoint="/api/invasions"
+                titleKey="admin.tabs.invasions"
+                fields={[
+                  { key: 'title', labelKey: 'admin.invasions.title_ru' },
+                  { key: 'year', labelKey: 'admin.invasions.year' },
+                  { key: 'region', labelKey: 'admin.invasions.region' }
+                ]}
+              />
+            </>
+          )}
+          {activeTab === 'maps' && (
+            <>
+              <MapForm />
+              <AdminList
+                endpoint="/api/admin/map-layers"
+                titleKey="admin.tabs.maps"
+                fields={[
+                  { key: 'name', labelKey: 'admin.maps.name_ru' },
+                  { key: 'layer_type', labelKey: 'admin.maps.layer_type' },
+                  { key: 'year', labelKey: 'admin.maps.year' }
+                ]}
+              />
+            </>
+          )}
+          {activeTab === 'preparations' && (
+            <>
+              <PreparationForm />
+              <AdminList
+                endpoint="/api/preparations"
+                titleKey="admin.tabs.preparations"
+                fields={[
+                  { key: 'name', labelKey: 'admin.preparations.name_ru' },
+                  { key: 'active_substance', labelKey: 'admin.preparations.active_substance_ru' }
+                ]}
+              />
+            </>
+          )}
+          {activeTab === 'methods' && (
+            <>
+              <MethodForm />
+              <AdminList
+                endpoint="/api/admin/methods"
+                titleKey="admin.tabs.methods"
+                fields={[
+                  { key: 'name', labelKey: 'admin.methods.name_ru' }
+                ]}
+              />
+            </>
+          )}
         </div>
       </div>
     </Layout>

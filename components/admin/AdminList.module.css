@@ -1,0 +1,103 @@
+.list {
+  margin-top: 2rem;
+}
+
+.listTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.loading,
+.empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+}
+
+.table {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+thead {
+  background: var(--bg-secondary);
+}
+
+th,
+td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+th {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+tr:hover {
+  background: var(--bg-secondary);
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.editButton,
+.deleteButton {
+  padding: 6px 12px;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: var(--transition);
+  min-height: 36px;
+}
+
+.editButton {
+  background: var(--primary-color);
+  color: #000000;
+  border-color: var(--primary-color);
+}
+
+.editButton:hover {
+  background: var(--primary-hover);
+}
+
+.deleteButton {
+  background: transparent;
+  color: var(--danger-color);
+  border-color: var(--danger-color);
+}
+
+.deleteButton:hover {
+  background: var(--danger-color);
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .table {
+    font-size: 14px;
+  }
+
+  th,
+  td {
+    padding: 0.5rem;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+}
+
