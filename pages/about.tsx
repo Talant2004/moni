@@ -14,53 +14,37 @@ export default function About() {
 
         <div className={styles.content}>
           <section className={styles.section}>
-            <h2>О проекте</h2>
-            <p>
-              Данный интернет-ресурс создан в рамках грантового проекта, направленного на изучение
-              мароккской саранчи и разработку методов контроля ее численности. Проект объединяет
-              усилия ученых, специалистов и практиков в области защиты растений.
-            </p>
+            <h2>{t('about.project.title')}</h2>
+            <p>{t('about.project.description')}</p>
           </section>
 
           <section className={styles.section}>
-            <h2>{t('about.team')}</h2>
-            <p>
-              Над проектом работают ведущие специалисты в области энтомологии, фитопатологии и
-              защиты растений из Казахского научно-исследовательского института защиты и карантина растений (КазНИИЗиКР).
-            </p>
+            <h2>{t('about.team.title')}</h2>
+            <p>{t('about.team.description')}</p>
           </section>
 
           <section className={styles.section}>
-            <h2>{t('about.materials')}</h2>
-            <p>
-              Материалы проекта включают научные публикации, отчеты о проведенных исследованиях,
-              методические рекомендации и базу данных по нашествиям саранчовых.
-            </p>
+            <h2>{t('about.materials.title')}</h2>
+            <p>{t('about.materials.description')}</p>
           </section>
 
           <section className={styles.section}>
             <h2>{t('about.links.kazniizikr')}</h2>
             <p>
               <a href="https://kazniizikr.kz" target="_blank" rel="noopener noreferrer" className={styles.link}>
-                Официальный сайт КазНИИЗиКР
+                {t('about.links.kazniizikrSite')}
               </a>
             </p>
           </section>
 
           <section className={styles.section}>
-            <h2>{t('about.links.publications')}</h2>
-            <p>
-              Публикации авторов проекта будут размещены на данном ресурсе и доступны для просмотра
-              и скачивания.
-            </p>
+            <h2>{t('about.links.publications.title')}</h2>
+            <p>{t('about.links.publications.description')}</p>
           </section>
 
           <section className={styles.section}>
-            <h2>{t('about.links.sources')}</h2>
-            <p>
-              Все использованные источники информации указаны в соответствующих разделах ресурса.
-              При использовании материалов просим указывать ссылку на источник.
-            </p>
+            <h2>{t('about.links.sources.title')}</h2>
+            <p>{t('about.links.sources.description')}</p>
           </section>
         </div>
       </div>
