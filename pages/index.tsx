@@ -24,6 +24,8 @@ export default function Home() {
                 src="/images/locusts/Мароккская саранча.jpg" 
                 alt={t('home.moroccan')}
                 className={styles.image}
+                style={{ width: '100%', height: 'auto', display: 'block' }}
+                loading="eager"
               />
             </div>
             <h3>{t('home.moroccan')}</h3>
@@ -39,6 +41,8 @@ export default function Home() {
                 src="/images/locusts/Итальянский прус.jpg" 
                 alt={t('home.italian')}
                 className={styles.image}
+                style={{ width: '100%', height: 'auto', display: 'block' }}
+                loading="eager"
               />
             </div>
             <h3>{t('home.italian')}</h3>
@@ -54,6 +58,8 @@ export default function Home() {
                 src="/images/locusts/Азиатская саранча.jpg" 
                 alt={t('home.asian')}
                 className={styles.image}
+                style={{ width: '100%', height: 'auto', display: 'block' }}
+                loading="eager"
               />
             </div>
             <h3>{t('home.asian')}</h3>
