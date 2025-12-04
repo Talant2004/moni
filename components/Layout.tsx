@@ -68,7 +68,7 @@ export default function Layout({ children }: LayoutProps) {
       </main>
 
       <footer className={styles.footer}>
-        <p>&copy; 2024 Саранча. База данных по мароккской саранче.</p>
+        <p>&copy; 2024 {t('footer.text')}</p>
       </footer>
     </div>
   )
