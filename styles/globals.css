@@ -5,9 +5,9 @@
 }
 
 :root {
-  --primary-color: #2563eb;
-  --primary-hover: #1d4ed8;
-  --primary-light: #3b82f6;
+  --primary-color: #00FF00;
+  --primary-hover: #00CC00;
+  --primary-light: #33FF33;
   --secondary-color: #64748b;
   --success-color: #10b981;
   --warning-color: #f59e0b;
@@ -83,7 +83,7 @@ button::before {
   width: 0;
   height: 0;
   border-radius: 50%;
-  background: rgba(37, 99, 235, 0.1);
+  background: rgba(0, 255, 0, 0.1);
   transform: translate(-50%, -50%);
   transition: width 0.6s, height 0.6s;
 }
@@ -107,8 +107,8 @@ button:active {
 
 button.primary {
   background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-  color: #fff;
-  border-color: var(--primary-color);
+  color: #000000;
+  border-color: #000000;
   box-shadow: var(--shadow-md);
 }
 

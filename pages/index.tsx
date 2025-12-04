@@ -19,6 +19,13 @@ export default function Home() {
 
         <div className={styles.locustTypes}>
           <div className={styles.locustCard}>
+            <div className={styles.locustImage}>
+              <img 
+                src="/images/locusts/Мароккская саранча.jpg" 
+                alt={t('home.moroccan')}
+                className={styles.image}
+              />
+            </div>
             <h3>{t('home.moroccan')}</h3>
             <p>{t('home.moroccanDesc')}</p>
             <Link href="/maps" className={styles.cardButton}>
@@ -27,6 +34,13 @@ export default function Home() {
           </div>
 
           <div className={styles.locustCard}>
+            <div className={styles.locustImage}>
+              <img 
+                src="/images/locusts/Итальянский прус.jpg" 
+                alt={t('home.italian')}
+                className={styles.image}
+              />
+            </div>
             <h3>{t('home.italian')}</h3>
             <p>{t('home.italianDesc')}</p>
             <Link href="/maps" className={styles.cardButton}>
@@ -35,6 +49,13 @@ export default function Home() {
           </div>
 
           <div className={styles.locustCard}>
+            <div className={styles.locustImage}>
+              <img 
+                src="/images/locusts/Азиатская саранча.jpg" 
+                alt={t('home.asian')}
+                className={styles.image}
+              />
+            </div>
             <h3>{t('home.asian')}</h3>
             <p>{t('home.asianDesc')}</p>
             <Link href="/maps" className={styles.cardButton}>

@@ -81,7 +81,7 @@ function MapLayers({ filters, mapData }: { filters: MapComponentProps['filters']
       {filters.region && regionBoundaries[filters.region] && (
         <Polygon
           positions={regionBoundaries[filters.region]}
-          pathOptions={{ color: '#0066cc', fillColor: '#0066cc', fillOpacity: 0.1, weight: 2 }}
+          pathOptions={{ color: '#00FF00', fillColor: '#00FF00', fillOpacity: 0.1, weight: 2 }}
         />
       )}
 
