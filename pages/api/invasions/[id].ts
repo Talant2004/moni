@@ -1,29 +1,30 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getDatabase } from '../../../lib/database'
+import { query } from '../../../lib/database'
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {
       const { id } = req.query
-      const db = getDatabase()
       
-      const invasion = db.prepare('SELECT * FROM invasions WHERE id = ?').get(id)
+      const invasionResult = await query('SELECT * FROM invasions WHERE id = $1', [id])
       
-      if (!invasion) {
+      if (invasionResult.rows.length === 0) {
         res.status(404).json({ error: 'Invasion not found' })
         return
       }
 
+      const invasion = invasionResult.rows[0]
+
       // Get photos
-      const photos = db.prepare('SELECT photo_path FROM invasion_photos WHERE invasion_id = ?').all(id)
+      const photosResult = await query('SELECT photo_path FROM invasion_photos WHERE invasion_id = $1', [id])
       
       // Get links
-      const links = db.prepare('SELECT title, url FROM invasion_links WHERE invasion_id = ?').all(id)
+      const linksResult = await query('SELECT title, url FROM invasion_links WHERE invasion_id = $1', [id])
 
       res.status(200).json({
         ...invasion,
-        photos: photos.map((p: any) => p.photo_path),
-        links: links
+        photos: photosResult.rows.map((p: any) => p.photo_path),
+        links: linksResult.rows
       })
     } catch (error) {
       console.error('Database error:', error)
@@ -34,7 +35,3 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 }
-
-
-
-

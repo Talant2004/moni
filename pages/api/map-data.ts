@@ -1,41 +1,45 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getDatabase } from '../../lib/database'
+import { query } from '../../lib/database'
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {
-      const db = getDatabase()
       const { region, district, year, season, showThreat, showTreated, weather } = req.query
 
-      let query = 'SELECT * FROM map_data WHERE 1=1'
+      let sql = 'SELECT * FROM map_data WHERE 1=1'
       const params: any[] = []
+      let paramIndex = 1
 
       if (region) {
-        query += ' AND region = ?'
+        sql += ` AND region = $${paramIndex}`
         params.push(region)
+        paramIndex++
       }
 
       if (district) {
-        query += ' AND district LIKE ?'
+        sql += ` AND district LIKE $${paramIndex}`
         params.push(`%${district}%`)
+        paramIndex++
       }
 
       if (year) {
-        query += ' AND year = ?'
+        sql += ` AND year = $${paramIndex}`
         params.push(parseInt(year as string))
+        paramIndex++
       }
 
       if (season) {
-        query += ' AND season = ?'
+        sql += ` AND season = $${paramIndex}`
         params.push(season)
+        paramIndex++
       }
 
       if (showThreat === 'true') {
-        query += ' AND threat_level > 0'
+        sql += ' AND threat_level > 0'
       }
 
       if (showTreated === 'true') {
-        query += ' AND treated_area > 0'
+        sql += ' AND treated_area > 0'
       }
 
       // Weather filter - filter by weather parameter type
@@ -43,25 +47,24 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         const weatherType = weather as string
         switch (weatherType) {
           case 'temperature':
-            // Show only records with temperature data (not null)
-            query += ' AND temperature IS NOT NULL'
+            sql += ' AND temperature IS NOT NULL'
             break
           case 'precipitation':
-            query += ' AND precipitation IS NOT NULL'
+            sql += ' AND precipitation IS NOT NULL'
             break
           case 'humidity':
-            query += ' AND humidity IS NOT NULL'
+            sql += ' AND humidity IS NOT NULL'
             break
           case 'wind':
-            query += ' AND wind_speed IS NOT NULL'
+            sql += ' AND wind_speed IS NOT NULL'
             break
         }
       }
 
-      query += ' ORDER BY year DESC, region, district'
+      sql += ' ORDER BY year DESC, region, district'
 
-      const data = db.prepare(query).all(...params)
-      res.status(200).json(data)
+      const result = await query(sql, params)
+      res.status(200).json(result.rows)
     } catch (error) {
       console.error('Database error:', error)
       res.status(500).json({ error: 'Failed to fetch map data' })
@@ -71,4 +74,3 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 }
-
