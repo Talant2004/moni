@@ -27,23 +27,18 @@ export default function Layout({ children }: LayoutProps) {
           
           <div className={styles.navButtons}>
             <Link href="/maps" className={styles.navButton}>
-              <span className={styles.navIcon}>🗺️</span>
               {t('nav.maps')}
             </Link>
             <Link href="/invasions" className={styles.navButton}>
-              <span className={styles.navIcon}>📅</span>
               {t('nav.invasions')}
             </Link>
             <Link href="/preparations" className={styles.navButton}>
-              <span className={styles.navIcon}>💊</span>
               {t('nav.preparations')}
             </Link>
             <Link href="/methods" className={styles.navButton}>
-              <span className={styles.navIcon}>📋</span>
               {t('nav.methods')}
             </Link>
             <Link href="/about" className={styles.navButton}>
-              <span className={styles.navIcon}>ℹ️</span>
               {t('nav.about')}
             </Link>
           </div>

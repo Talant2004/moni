@@ -30,7 +30,7 @@ export default function QRCodeButton() {
         className={styles.qrButton}
         title="Показать QR код"
       >
-        📱 QR
+        QR
       </button>
 
       {showQR && (
@@ -40,7 +40,7 @@ export default function QRCodeButton() {
               className={styles.closeButton}
               onClick={() => setShowQR(false)}
             >
-              ✕
+              ×
             </button>
             <h3>QR код страницы</h3>
             <div className={styles.qrCode}>
