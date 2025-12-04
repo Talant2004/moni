@@ -17,9 +17,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const application_method = body.application_method || ''
       const application_method_kk = body.application_method_kk || ''
 
-      await query(`
+      // Insert preparation
+      const result = await query(`
         INSERT INTO preparations (name, description, active_substance, application_method, name_kk, description_kk, active_substance_kk, application_method_kk)
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        RETURNING id
       `, [
         name,
         description,
@@ -31,7 +33,33 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         application_method_kk || null
       ])
 
-      res.status(200).json({ success: true })
+      const prepId = result.rows[0].id
+
+      // Insert photos (base64 data)
+      if (body.photos && Array.isArray(body.photos)) {
+        for (const photoData of body.photos) {
+          if (photoData && typeof photoData === 'string') {
+            await query(`
+              INSERT INTO preparation_photos (preparation_id, photo_path)
+              VALUES ($1, $2)
+            `, [prepId, photoData])
+          }
+        }
+      }
+
+      // Insert links
+      if (body.links && Array.isArray(body.links)) {
+        for (const link of body.links) {
+          if (link.title && link.url) {
+            await query(`
+              INSERT INTO preparation_links (preparation_id, title, url)
+              VALUES ($1, $2, $3)
+            `, [prepId, link.title, link.url])
+          }
+        }
+      }
+
+      res.status(200).json({ success: true, id: prepId })
     } catch (error: any) {
       console.error('Database error:', error)
       res.status(500).json({ error: error.message || 'Failed to create preparation' })

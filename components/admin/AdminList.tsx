@@ -34,17 +34,41 @@ export default function AdminList({ endpoint, titleKey, fields, onEdit, onDelete
   }
 
   const handleDelete = async (id: number) => {
-    if (confirm(t('admin.confirm_delete'))) {
+    if (!confirm(t('admin.confirm_delete'))) {
+      return
+    }
+
+    // If onDelete callback is provided, use it
+    if (onDelete) {
       try {
-        const response = await fetch(`${endpoint}/${id}`, {
-          method: 'DELETE'
-        })
-        if (response.ok) {
-          fetchItems()
-        }
+        await onDelete(id)
+        fetchItems() // Refresh the list after deletion
       } catch (error) {
         console.error('Error deleting item:', error)
+        alert(t('admin.error'))
       }
+      return
+    }
+
+    // Otherwise, use default DELETE endpoint
+    try {
+      // Convert endpoint to admin endpoint if needed
+      const deleteEndpoint = endpoint.includes('/admin/') 
+        ? `${endpoint}/${id}` 
+        : endpoint.replace('/api/', '/api/admin/').replace('/invasions', '/invasions').replace('/preparations', '/preparations') + `/${id}`
+      
+      const response = await fetch(deleteEndpoint, {
+        method: 'DELETE'
+      })
+      if (response.ok) {
+        fetchItems()
+      } else {
+        const error = await response.json()
+        alert(error.error || t('admin.error'))
+      }
+    } catch (error) {
+      console.error('Error deleting item:', error)
+      alert(t('admin.error'))
     }
   }
 
@@ -86,14 +110,12 @@ export default function AdminList({ endpoint, titleKey, fields, onEdit, onDelete
                           {t('admin.edit')}
                         </button>
                       )}
-                      {onDelete && (
-                        <button
-                          onClick={() => handleDelete(item.id)}
-                          className={styles.deleteButton}
-                        >
-                          {t('admin.delete')}
-                        </button>
-                      )}
+                      <button
+                        onClick={() => handleDelete(item.id)}
+                        className={styles.deleteButton}
+                      >
+                        {t('admin.delete')}
+                      </button>
                     </div>
                   </td>
                 </tr>

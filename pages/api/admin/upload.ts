@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-// Simplified file upload handler for Vercel
-// For production, consider using external storage (S3, Cloudinary, etc.)
+// File upload handler - accepts base64 data
+// For Vercel compatibility, we store base64 in database
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
@@ -12,15 +12,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return
       }
 
-      // For Vercel, we'll store file paths/URLs in database
-      // Actual file storage should be handled by external service or static files
-      // This endpoint returns a placeholder path that can be used in database
-      const filePath = `/uploads/${fileType}_${Date.now()}_${fileName || 'file'}`
+      // Return base64 data path (stored in database)
+      // Format: data:image/jpeg;base64,/9j/4AAQSkZJRg...
+      const filePath = fileData // Store base64 directly
 
       res.status(200).json({ 
         success: true, 
         path: filePath,
-        message: 'File path generated. For production, implement actual file storage.'
+        filename: fileName || 'file'
       })
     } catch (error: any) {
       console.error('Upload error:', error)

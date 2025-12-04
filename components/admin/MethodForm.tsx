@@ -57,10 +57,27 @@ export default function MethodForm() {
     setMessage(null)
 
     try {
+      // Convert photos to base64
+      const photoData: string[] = []
+      if (formData.photos.length > 0) {
+        for (const photo of formData.photos) {
+          const reader = new FileReader()
+          const base64 = await new Promise<string>((resolve, reject) => {
+            reader.onload = () => {
+              const result = reader.result as string
+              resolve(result)
+            }
+            reader.onerror = reject
+            reader.readAsDataURL(photo)
+          })
+          photoData.push(base64)
+        }
+      }
+
       const dataToSend = {
         ...formData,
-        photos: [],
-        links: formData.links
+        photos: photoData,
+        photos_files: undefined // Remove File objects
       }
 
       const response = await fetch('/api/admin/methods', {

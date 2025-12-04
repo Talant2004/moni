@@ -61,9 +61,12 @@ export default function AdminPanel() {
                   { key: 'year', labelKey: 'admin.invasions.year' },
                   { key: 'region', labelKey: 'admin.invasions.region' }
                 ]}
-                onDelete={(id) => {
-                  fetch(`/api/admin/invasions/${id}`, { method: 'DELETE' })
-                    .then(() => window.location.reload())
+                onDelete={async (id) => {
+                  const response = await fetch(`/api/admin/invasions/${id}`, { method: 'DELETE' })
+                  if (!response.ok) {
+                    const error = await response.json()
+                    throw new Error(error.error || 'Failed to delete')
+                  }
                 }}
               />
             </>
@@ -79,9 +82,12 @@ export default function AdminPanel() {
                   { key: 'layer_type', labelKey: 'admin.maps.layer_type' },
                   { key: 'year', labelKey: 'admin.maps.year' }
                 ]}
-                onDelete={(id) => {
-                  fetch(`/api/admin/map-layers/${id}`, { method: 'DELETE' })
-                    .then(() => window.location.reload())
+                onDelete={async (id) => {
+                  const response = await fetch(`/api/admin/map-layers/${id}`, { method: 'DELETE' })
+                  if (!response.ok) {
+                    const error = await response.json()
+                    throw new Error(error.error || 'Failed to delete')
+                  }
                 }}
               />
             </>
@@ -96,9 +102,12 @@ export default function AdminPanel() {
                   { key: 'name', labelKey: 'admin.preparations.name_ru' },
                   { key: 'active_substance', labelKey: 'admin.preparations.active_substance_ru' }
                 ]}
-                onDelete={(id) => {
-                  fetch(`/api/admin/preparations/${id}`, { method: 'DELETE' })
-                    .then(() => window.location.reload())
+                onDelete={async (id) => {
+                  const response = await fetch(`/api/admin/preparations/${id}`, { method: 'DELETE' })
+                  if (!response.ok) {
+                    const error = await response.json()
+                    throw new Error(error.error || 'Failed to delete')
+                  }
                 }}
               />
             </>
@@ -112,9 +121,12 @@ export default function AdminPanel() {
                 fields={[
                   { key: 'name', labelKey: 'admin.methods.name_ru' }
                 ]}
-                onDelete={(id) => {
-                  fetch(`/api/admin/methods/${id}`, { method: 'DELETE' })
-                    .then(() => window.location.reload())
+                onDelete={async (id) => {
+                  const response = await fetch(`/api/admin/methods/${id}`, { method: 'DELETE' })
+                  if (!response.ok) {
+                    const error = await response.json()
+                    throw new Error(error.error || 'Failed to delete')
+                  }
                 }}
               />
             </>

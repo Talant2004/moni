@@ -6,6 +6,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method === 'DELETE') {
     try {
+      // Delete related records first
+      await query('DELETE FROM preparation_links WHERE preparation_id = $1', [id])
+      await query('DELETE FROM preparation_photos WHERE preparation_id = $1', [id])
+      
+      // Delete preparation
       await query('DELETE FROM preparations WHERE id = $1', [id])
       res.status(200).json({ success: true })
     } catch (error: any) {

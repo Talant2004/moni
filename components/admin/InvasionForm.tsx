@@ -96,10 +96,42 @@ export default function InvasionForm() {
     setMessage(null)
 
     try {
+      // Convert photos to base64
+      const photoData: string[] = []
+      if (formData.photos.length > 0) {
+        for (const photo of formData.photos) {
+          const reader = new FileReader()
+          const base64 = await new Promise<string>((resolve, reject) => {
+            reader.onload = () => {
+              const result = reader.result as string
+              resolve(result)
+            }
+            reader.onerror = reject
+            reader.readAsDataURL(photo)
+          })
+          photoData.push(base64)
+        }
+      }
+
+      // Convert KML file to base64 if provided
+      let kmlData: string | null = null
+      if (formData.kml_file) {
+        const reader = new FileReader()
+        kmlData = await new Promise<string>((resolve, reject) => {
+          reader.onload = () => {
+            const result = reader.result as string
+            resolve(result)
+          }
+          reader.onerror = reject
+          reader.readAsDataURL(formData.kml_file!)
+        })
+      }
+
       const dataToSend = {
         ...formData,
-        photos: [], // File upload will be handled separately later
-        kml_file: null
+        photos: photoData,
+        kml_file: kmlData,
+        photos_files: undefined // Remove File objects
       }
 
       const response = await fetch('/api/admin/invasions', {

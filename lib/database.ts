@@ -191,6 +191,25 @@ async function initializeTables() {
       )
     `)
 
+    // Preparation photos table
+    await query(`
+      CREATE TABLE IF NOT EXISTS preparation_photos (
+        id SERIAL PRIMARY KEY,
+        preparation_id INTEGER REFERENCES preparations(id),
+        photo_path TEXT
+      )
+    `)
+
+    // Preparation links table
+    await query(`
+      CREATE TABLE IF NOT EXISTS preparation_links (
+        id SERIAL PRIMARY KEY,
+        preparation_id INTEGER REFERENCES preparations(id),
+        title TEXT,
+        url TEXT
+      )
+    `)
+
     // Methods table
     await query(`
       CREATE TABLE IF NOT EXISTS methods (

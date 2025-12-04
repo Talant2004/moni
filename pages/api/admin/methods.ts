@@ -27,6 +27,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       const methodId = result.rows[0].id
 
+      // Insert photos (base64 data)
+      if (body.photos && Array.isArray(body.photos)) {
+        for (const photoData of body.photos) {
+          if (photoData && typeof photoData === 'string') {
+            await query(`
+              INSERT INTO method_photos (method_id, photo_path)
+              VALUES ($1, $2)
+            `, [methodId, photoData])
+          }
+        }
+      }
+
       // Insert links
       if (body.links && Array.isArray(body.links)) {
         for (const link of body.links) {

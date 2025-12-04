@@ -25,9 +25,11 @@ export default function Layout({ children }: LayoutProps) {
           </Link>
           
           <div className={styles.navButtons}>
-            <Link href="/maps" className={styles.navButton}>
-              {t('nav.maps')}
-            </Link>
+            {router.pathname !== '/AdminkaQwert' && (
+              <Link href="/maps" className={styles.navButton}>
+                {t('nav.maps')}
+              </Link>
+            )}
             <Link href="/invasions" className={styles.navButton}>
               {t('nav.invasions')}
             </Link>
