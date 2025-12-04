@@ -9,6 +9,12 @@ const nextConfig = {
   images: {
     domains: ['localhost'],
   },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals.push('better-sqlite3')
+    }
+    return config
+  },
 }
 
 module.exports = nextConfig
