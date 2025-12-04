@@ -134,7 +134,7 @@
   height: auto;
   display: block;
   object-fit: cover;
-  max-height: 250px;
+  max-height: 180px;
 }
 
 .cardButton {
