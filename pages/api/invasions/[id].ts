@@ -5,7 +5,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'GET') {
     try {
       const { id } = req.query
-      const locale = req.headers['accept-language']?.includes('kk') ? 'kk' : 'ru'
+      const acceptLanguage = req.headers['accept-language'] || ''
+      const locale = acceptLanguage.includes('kk') || acceptLanguage.includes('kz') ? 'kk' : 'ru'
       
       const invasionResult = await query('SELECT * FROM invasions WHERE id = $1', [id])
       

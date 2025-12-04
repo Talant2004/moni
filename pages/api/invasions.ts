@@ -4,7 +4,8 @@ import { query } from '../../lib/database'
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {
-      const locale = req.headers['accept-language']?.includes('kk') ? 'kk' : 'ru'
+      const acceptLanguage = req.headers['accept-language'] || ''
+      const locale = acceptLanguage.includes('kk') || acceptLanguage.includes('kz') ? 'kk' : 'ru'
       const result = await query('SELECT * FROM invasions ORDER BY year DESC')
       
       // Map results to use correct locale
