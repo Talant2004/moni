@@ -1,6 +1,6 @@
 import { Pool, QueryResult } from 'pg'
 
-// Database connection pool
+// Database connection pool for Neon PostgreSQL
 let pool: Pool | null = null
 
 function getPool(): Pool {
