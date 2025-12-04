@@ -44,13 +44,22 @@ export default function QRCodeButton() {
             </button>
             <h3>QR код страницы</h3>
             <div className={styles.qrCode}>
-              {currentUrl && <QRCodeSVG value={currentUrl} size={256} className="qr-code-svg" />}
+              {currentUrl && (
+                <QRCodeSVG 
+                  value={currentUrl} 
+                  size={300}
+                  level="H"
+                  fgColor="#000000"
+                  bgColor="#FFFFFF"
+                  className={styles.qrCodeSvg}
+                />
+              )}
             </div>
             <p className={styles.url}>{currentUrl}</p>
             <button 
               className={styles.downloadButton}
               onClick={() => {
-                const svg = document.querySelector('.qr-code-svg')
+                const svg = document.querySelector(`.${styles.qrCodeSvg}`)
                 if (svg) {
                   const svgData = new XMLSerializer().serializeToString(svg)
                   const canvas = document.createElement('canvas')
