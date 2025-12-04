@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Website about Moroccan locust with interactive maps and database",
   "private": true,
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
