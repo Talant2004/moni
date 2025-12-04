@@ -24,7 +24,7 @@
     "react-leaflet": "^4.2.1"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.11",
+    "@types/better-sqlite3": "^7.6.12",
     "@types/leaflet": "^1.9.8",
     "@types/node": "^20.10.0",
     "@types/react": "^18.2.0",
