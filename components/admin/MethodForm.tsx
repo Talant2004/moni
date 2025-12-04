@@ -57,22 +57,18 @@ export default function MethodForm() {
     setMessage(null)
 
     try {
-      const formDataToSend = new FormData()
-      Object.keys(formData).forEach(key => {
-        if (key === 'photos') {
-          formData.photos.forEach((photo, i) => {
-            formDataToSend.append(`photos[${i}]`, photo)
-          })
-        } else if (key === 'links') {
-          formDataToSend.append('links', JSON.stringify(formData.links))
-        } else {
-          formDataToSend.append(key, String(formData[key as keyof MethodData]))
-        }
-      })
+      const dataToSend = {
+        ...formData,
+        photos: [],
+        links: formData.links
+      }
 
       const response = await fetch('/api/admin/methods', {
         method: 'POST',
-        body: formDataToSend
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToSend)
       })
 
       if (response.ok) {

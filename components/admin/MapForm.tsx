@@ -47,18 +47,17 @@ export default function MapForm() {
     setMessage(null)
 
     try {
-      const formDataToSend = new FormData()
-      Object.keys(formData).forEach(key => {
-        if (key === 'kml_file' && formData.kml_file) {
-          formDataToSend.append('kml_file', formData.kml_file)
-        } else {
-          formDataToSend.append(key, String(formData[key as keyof MapLayerData]))
-        }
-      })
+      const dataToSend = {
+        ...formData,
+        kml_file: null
+      }
 
       const response = await fetch('/api/admin/map-layers', {
         method: 'POST',
-        body: formDataToSend
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToSend)
       })
 
       if (response.ok) {

@@ -96,24 +96,18 @@ export default function InvasionForm() {
     setMessage(null)
 
     try {
-      const formDataToSend = new FormData()
-      Object.keys(formData).forEach(key => {
-        if (key === 'photos') {
-          formData.photos.forEach((photo, i) => {
-            formDataToSend.append(`photos[${i}]`, photo)
-          })
-        } else if (key === 'links') {
-          formDataToSend.append('links', JSON.stringify(formData.links))
-        } else if (key === 'kml_file' && formData.kml_file) {
-          formDataToSend.append('kml_file', formData.kml_file)
-        } else {
-          formDataToSend.append(key, String(formData[key as keyof InvasionData]))
-        }
-      })
+      const dataToSend = {
+        ...formData,
+        photos: [], // File upload will be handled separately later
+        kml_file: null
+      }
 
       const response = await fetch('/api/admin/invasions', {
         method: 'POST',
-        body: formDataToSend
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToSend)
       })
 
       if (response.ok) {
