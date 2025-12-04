@@ -61,7 +61,7 @@ export default function Invasions() {
                   <p className={styles.invasionRegion}>{invasion.region}</p>
                 )}
                 <p className={styles.invasionDescription}>{invasion.description}</p>
-                <div className={styles.invasionLink}>Подробнее →</div>
+                <div className={styles.invasionLink}>{t('invasions.readMore')}</div>
               </Link>
             ))
           ) : (

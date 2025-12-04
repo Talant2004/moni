@@ -58,12 +58,12 @@ export default function Preparations() {
                 <p className={styles.preparationDescription}>{prep.description}</p>
                 {prep.activeSubstance && (
                   <p className={styles.preparationDetail}>
-                    <strong>Действующее вещество:</strong> {prep.activeSubstance}
+                    <strong>{t('preparations.activeSubstance')}:</strong> {prep.activeSubstance}
                   </p>
                 )}
                 {prep.applicationMethod && (
                   <p className={styles.preparationDetail}>
-                    <strong>Способ применения:</strong> {prep.applicationMethod}
+                    <strong>{t('preparations.applicationMethod')}:</strong> {prep.applicationMethod}
                   </p>
                 )}
               </div>

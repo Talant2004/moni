@@ -78,7 +78,7 @@ export default function InvasionDetail() {
           <h1 className={styles.title}>{invasion.title}</h1>
           
           {invasion.region && (
-            <p className={styles.region}>Регион: {invasion.region}</p>
+            <p className={styles.region}>{t('invasions.detail.region')}: {invasion.region}</p>
           )}
 
           <div className={styles.content}>
@@ -92,7 +92,7 @@ export default function InvasionDetail() {
 
               {invasion.links && invasion.links.length > 0 && (
                 <div className={styles.linksSection}>
-                  <h3>Ссылки:</h3>
+                  <h3>{t('invasions.detail.links')}</h3>
                   <ul>
                     {invasion.links.map((link, index) => (
                       <li key={index}>
@@ -107,14 +107,14 @@ export default function InvasionDetail() {
 
               {/* TODO: Add animated map component here */}
               <div className={styles.mapPlaceholder}>
-                <p>Анимированная карта распространения будет отображаться здесь</p>
+                <p>{t('invasions.detail.mapPlaceholder')}</p>
               </div>
             </div>
 
             {invasion.photos && invasion.photos.length > 0 && (
               <div className={styles.photos}>
                 {invasion.photos.map((photo, index) => (
-                  <img key={index} src={photo} alt={`Фото ${index + 1}`} />
+                  <img key={index} src={photo} alt={t('invasions.detail.photo', { number: index + 1 })} />
                 ))}
               </div>
             )}
