@@ -2,7 +2,6 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
-import QRCodeButton from './QRCodeButton'
 import styles from './Layout.module.css'
 
 interface LayoutProps {
@@ -44,7 +43,6 @@ export default function Layout({ children }: LayoutProps) {
           </div>
 
           <div className={styles.rightButtons}>
-            <QRCodeButton />
             <div className={styles.languageSwitcher}>
               <button
                 onClick={() => changeLanguage('ru')}
