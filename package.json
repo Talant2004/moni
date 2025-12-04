@@ -1,0 +1,32 @@
+{
+  "name": "sarancha-website",
+  "version": "1.0.0",
+  "description": "Website about Moroccan locust with interactive maps and database",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "better-sqlite3": "^9.2.2",
+    "i18next": "^23.7.0",
+    "leaflet": "^1.9.4",
+    "next": "^14.0.0",
+    "qrcode.react": "^3.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-i18next": "^13.5.0",
+    "react-leaflet": "^4.2.1"
+  },
+  "devDependencies": {
+    "@types/leaflet": "^1.9.8",
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "eslint": "^8.55.0",
+    "eslint-config-next": "^14.0.0",
+    "typescript": "^5.3.0"
+  }
+}

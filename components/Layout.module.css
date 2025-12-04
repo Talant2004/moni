@@ -1,0 +1,235 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-bottom: 2px solid var(--border-color);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+.nav {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.logo {
+  font-size: 1.875rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 50%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-decoration: none;
+  letter-spacing: -0.5px;
+  transition: var(--transition);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo::before {
+  content: '🦗';
+  font-size: 1.5rem;
+  filter: grayscale(0.3);
+  transition: var(--transition);
+}
+
+.logo:hover {
+  transform: scale(1.05);
+  text-decoration: none;
+}
+
+.logo:hover::before {
+  transform: rotate(15deg) scale(1.1);
+  filter: grayscale(0);
+}
+
+.navButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.navButton {
+  padding: 10px 20px;
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: var(--transition);
+  cursor: pointer;
+  position: relative;
+}
+
+.navIcon {
+  font-size: 1.125rem;
+  transition: var(--transition);
+  display: inline-block;
+}
+
+.navButton:hover .navIcon {
+  transform: scale(1.2) rotate(5deg);
+}
+
+.navButton::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--primary-color);
+  transition: var(--transition);
+  transform: translateX(-50%);
+}
+
+.navButton:hover::after {
+  width: 80%;
+}
+
+.navButton:hover {
+  background-color: var(--bg-secondary);
+  color: var(--primary-color);
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.navButton:active {
+  transform: translateY(0);
+}
+
+.rightButtons {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.languageSwitcher {
+  display: flex;
+  gap: 0.5rem;
+  background: var(--bg-secondary);
+  padding: 4px;
+  border-radius: var(--radius-md);
+}
+
+.languageSwitcher button {
+  padding: 6px 14px;
+  border: none;
+  background-color: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  min-height: 36px;
+  font-size: 14px;
+  transition: var(--transition);
+}
+
+.languageSwitcher button:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.languageSwitcher button.active {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+.main {
+  flex: 1;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+}
+
+.footer {
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  border-top: 2px solid var(--border-color);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  margin-top: auto;
+  color: var(--text-secondary);
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.footer p {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .nav {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 1rem;
+  }
+
+  .navButtons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .navButton {
+    width: 100%;
+    font-size: 16px;
+    min-height: 48px;
+    justify-content: flex-start;
+    padding-left: 1rem;
+  }
+
+  .navButton::after {
+    left: 0;
+    transform: none;
+  }
+
+  .navButton:hover::after {
+    width: 4px;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+
+  .rightButtons {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .languageSwitcher {
+    width: auto;
+  }
+
+  .main {
+    padding: 1.5rem 1rem;
+  }
+}
+

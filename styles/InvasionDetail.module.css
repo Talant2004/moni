@@ -1,0 +1,151 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.backLink {
+  display: inline-block;
+  margin-bottom: 2rem;
+  padding: 12px 24px;
+  background-color: #ffffff;
+  color: #000000;
+  border: 2px solid #333333;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.2s;
+}
+
+.backLink:hover {
+  background-color: #f0f0f0;
+  text-decoration: none;
+}
+
+.article {
+  background-color: #ffffff;
+  border: 2px solid #333333;
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #000000;
+}
+
+.region {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.textContent {
+  line-height: 1.8;
+}
+
+.description {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #000000;
+}
+
+.fullText {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.fullText p {
+  margin-bottom: 1rem;
+}
+
+.linksSection {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border: 2px solid #333333;
+  border-radius: 4px;
+}
+
+.linksSection h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #000000;
+}
+
+.linksSection ul {
+  list-style: none;
+  padding: 0;
+}
+
+.linksSection li {
+  margin-bottom: 0.5rem;
+}
+
+.linksSection a {
+  color: #0066cc;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.linksSection a:hover {
+  text-decoration: underline;
+}
+
+.mapPlaceholder {
+  margin-top: 2rem;
+  padding: 3rem;
+  background-color: #f0f0f0;
+  border: 2px dashed #333333;
+  border-radius: 4px;
+  text-align: center;
+  color: #666;
+}
+
+.photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.photos img {
+  width: 100%;
+  height: auto;
+  border: 2px solid #333333;
+  border-radius: 4px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .article {
+    padding: 1.5rem;
+  }
+
+  .description {
+    font-size: 1.1rem;
+  }
+
+  .fullText {
+    font-size: 1rem;
+  }
+}
+
+
+
+

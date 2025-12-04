@@ -1,0 +1,302 @@
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: fadeIn 0.6s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 50%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -1px;
+  line-height: 1.2;
+}
+
+.mapControls {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.mapTypeButtons {
+  display: flex;
+  gap: 0.75rem;
+  background: var(--bg-secondary);
+  padding: 6px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.mapTypeButtons button {
+  padding: 12px 28px;
+  background-color: transparent;
+  color: var(--text-secondary);
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 15px;
+  min-height: 48px;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+}
+
+.mapTypeButtons button:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.mapTypeButtons button.active {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  color: #ffffff;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.content {
+  display: flex;
+  gap: 2rem;
+  height: calc(100vh - 300px);
+  min-height: 600px;
+}
+
+.filtersPanel {
+  width: 380px;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  overflow-y: auto;
+  height: fit-content;
+  max-height: 100%;
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 100px;
+  transition: var(--transition);
+}
+
+.filtersPanel:hover {
+  box-shadow: var(--shadow-xl);
+}
+
+.filtersPanel h2 {
+  font-size: 1.75rem;
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.filterGroup {
+  margin-bottom: 1.75rem;
+}
+
+.filterGroup label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 15px;
+  letter-spacing: 0.3px;
+}
+
+.filterGroup .checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-size: 15px;
+  padding: 0.5rem;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+
+.filterGroup .checkboxLabel:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.select,
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 48px;
+  transition: var(--transition);
+  font-family: inherit;
+}
+
+.select:focus,
+.input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+  transform: translateY(-1px);
+}
+
+.select:hover,
+.input:hover {
+  border-color: var(--border-dark);
+}
+
+.checkbox {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  transition: var(--transition);
+}
+
+.checkbox:hover {
+  transform: scale(1.1);
+}
+
+.filterActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--border-color);
+}
+
+.applyButton,
+.resetButton {
+  flex: 1;
+  padding: 14px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  min-height: 48px;
+  border-radius: var(--radius-md);
+  transition: var(--transition);
+}
+
+.applyButton {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  color: #ffffff;
+  border: none;
+  box-shadow: var(--shadow-md);
+}
+
+.applyButton:hover {
+  background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary-color) 100%);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.applyButton:active {
+  transform: translateY(0);
+}
+
+.resetButton {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border: 2px solid var(--border-dark);
+  box-shadow: var(--shadow-sm);
+}
+
+.resetButton:hover {
+  background-color: var(--bg-secondary);
+  border-color: var(--text-secondary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.resetButton:active {
+  transform: translateY(0);
+}
+
+.mapContainer {
+  flex: 1;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  min-height: 600px;
+  box-shadow: var(--shadow-lg);
+  transition: var(--transition);
+}
+
+.mapContainer:hover {
+  box-shadow: var(--shadow-xl);
+  border-color: var(--primary-color);
+}
+
+/* Mobile responsive */
+@media (max-width: 968px) {
+  .content {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .filtersPanel {
+    width: 100%;
+    max-height: none;
+  }
+
+  .mapContainer {
+    min-height: 500px;
+    height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .mapTypeButtons {
+    width: 100%;
+    flex-direction: row;
+    padding: 4px;
+  }
+
+  .mapTypeButtons button {
+    flex: 1;
+    font-size: 14px;
+    min-height: 44px;
+    padding: 10px 16px;
+  }
+
+  .filtersPanel {
+    padding: 1.5rem;
+  }
+
+  .filterActions {
+    flex-direction: column;
+  }
+
+  .applyButton,
+  .resetButton {
+    width: 100%;
+    font-size: 16px;
+    min-height: 52px;
+  }
+}
+
+
+
