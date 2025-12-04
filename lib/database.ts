@@ -75,9 +75,39 @@ async function initializeTables() {
         description TEXT,
         full_text TEXT,
         region TEXT,
+        title_kk TEXT,
+        description_kk TEXT,
+        full_text_kk TEXT,
+        region_kk TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `)
+
+    // Add Kazakh columns if they don't exist
+    try {
+      const invasionColumnsCheck = await query(`
+        SELECT column_name 
+        FROM information_schema.columns 
+        WHERE table_name = 'invasions' 
+        AND column_name IN ('title_kk', 'description_kk', 'full_text_kk', 'region_kk')
+      `)
+      const invasionColumnNames = invasionColumnsCheck.rows.map((row: any) => row.column_name)
+      
+      if (!invasionColumnNames.includes('title_kk')) {
+        await query('ALTER TABLE invasions ADD COLUMN title_kk TEXT')
+      }
+      if (!invasionColumnNames.includes('description_kk')) {
+        await query('ALTER TABLE invasions ADD COLUMN description_kk TEXT')
+      }
+      if (!invasionColumnNames.includes('full_text_kk')) {
+        await query('ALTER TABLE invasions ADD COLUMN full_text_kk TEXT')
+      }
+      if (!invasionColumnNames.includes('region_kk')) {
+        await query('ALTER TABLE invasions ADD COLUMN region_kk TEXT')
+      }
+    } catch (e) {
+      // Columns might already exist, ignore
+    }
 
     // Preparations table
     await query(`
@@ -87,9 +117,39 @@ async function initializeTables() {
         description TEXT,
         active_substance TEXT,
         application_method TEXT,
+        name_kk TEXT,
+        description_kk TEXT,
+        active_substance_kk TEXT,
+        application_method_kk TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `).catch(() => {}) // Игнорируем ошибки если таблица уже существует
+
+    // Add Kazakh columns if they don't exist
+    try {
+      const prepColumnsCheck = await query(`
+        SELECT column_name 
+        FROM information_schema.columns 
+        WHERE table_name = 'preparations' 
+        AND column_name IN ('name_kk', 'description_kk', 'active_substance_kk', 'application_method_kk')
+      `)
+      const prepColumnNames = prepColumnsCheck.rows.map((row: any) => row.column_name)
+      
+      if (!prepColumnNames.includes('name_kk')) {
+        await query('ALTER TABLE preparations ADD COLUMN name_kk TEXT')
+      }
+      if (!prepColumnNames.includes('description_kk')) {
+        await query('ALTER TABLE preparations ADD COLUMN description_kk TEXT')
+      }
+      if (!prepColumnNames.includes('active_substance_kk')) {
+        await query('ALTER TABLE preparations ADD COLUMN active_substance_kk TEXT')
+      }
+      if (!prepColumnNames.includes('application_method_kk')) {
+        await query('ALTER TABLE preparations ADD COLUMN application_method_kk TEXT')
+      }
+    } catch (e) {
+      // Columns might already exist, ignore
+    }
 
     // Map data table
     await query(`
@@ -135,15 +195,19 @@ async function initializeTables() {
     const invasionCount = await query('SELECT COUNT(*) as count FROM invasions')
     if (parseInt(invasionCount.rows[0].count) === 0) {
       const insertInvasion = await query(`
-        INSERT INTO invasions (year, title, description, full_text, region)
-        VALUES ($1, $2, $3, $4, $5)
+        INSERT INTO invasions (year, title, description, full_text, region, title_kk, description_kk, full_text_kk, region_kk)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
         RETURNING id
       `, [
         2020,
         'Нашествие мароккской саранчи 2020',
         'Крупное нашествие мароккской саранчи в южных регионах Казахстана',
         'В 2020 году произошло одно из крупнейших нашествий мароккской саранчи в истории Казахстана. Вспышка численности началась весной и охватила обширные территории южных областей. Данное событие было связано с благоприятными погодными условиями в предыдущие годы, что способствовало увеличению популяции. Меры по борьбе с вредителем были предприняты своевременно, что позволило минимизировать ущерб сельскому хозяйству.',
-        'Южный Казахстан'
+        'Южный Казахстан',
+        'Марокко шегірткесінің шабуылы 2020',
+        'Қазақстанның оңтүстік аймақтарында марокко шегірткесінің үлкен шабуылы',
+        '2020 жылы Қазақстан тарихында марокко шегірткесінің ең үлкен шабуылдарының бірі болды. Сандық жарылыс көктемде басталып, оңтүстік облыстардың кең аумақтарын қамтыды. Бұл оқиға алдыңғы жылдардағы қолайлы ауа райы жағдайларымен байланысты болды, бұл популяцияның өсуіне ықпал етті. Зиянкеспен күресу шаралары уақытында қабылданды, бұл ауыл шаруашылығына зиянды минимизациялауға мүмкіндік берді.',
+        'Оңтүстік Қазақстан'
       ])
       
       const invasionId = insertInvasion.rows[0].id
@@ -158,19 +222,69 @@ async function initializeTables() {
         INSERT INTO invasion_links (invasion_id, title, url)
         VALUES ($1, $2, $3)
       `, [invasionId, 'Публикация авторов', '#'])
+    } else {
+      // Update existing records with Kazakh translations if they don't have them
+      const existingInvasions = await query(`
+        SELECT id FROM invasions 
+        WHERE title_kk IS NULL OR description_kk IS NULL
+        LIMIT 1
+      `)
+      
+      if (existingInvasions.rows.length > 0) {
+        await query(`
+          UPDATE invasions 
+          SET title_kk = 'Марокко шегірткесінің шабуылы 2020',
+              description_kk = 'Қазақстанның оңтүстік аймақтарында марокко шегірткесінің үлкен шабуылы',
+              full_text_kk = '2020 жылы Қазақстан тарихында марокко шегірткесінің ең үлкен шабуылдарының бірі болды. Сандық жарылыс көктемде басталып, оңтүстік облыстардың кең аумақтарын қамтыды. Бұл оқиға алдыңғы жылдардағы қолайлы ауа райы жағдайларымен байланысты болды, бұл популяцияның өсуіне ықпал етті. Зиянкеспен күресу шаралары уақытында қабылданды, бұл ауыл шаруашылығына зиянды минимизациялауға мүмкіндік берді.',
+              region_kk = 'Оңтүстік Қазақстан'
+          WHERE id = $1
+        `, [existingInvasions.rows[0].id])
+      }
     }
 
     const prepCount = await query('SELECT COUNT(*) as count FROM preparations')
     if (parseInt(prepCount.rows[0].count) === 0) {
       await query(`
-        INSERT INTO preparations (name, description, active_substance, application_method)
-        VALUES ($1, $2, $3, $4)
-      `, ['Диазинон', 'Инсектицид контактно-кишечного действия', 'Диазинон', 'Опрыскивание'])
+        INSERT INTO preparations (name, description, active_substance, application_method, name_kk, description_kk, active_substance_kk, application_method_kk)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      `, ['Диазинон', 'Инсектицид контактно-кишечного действия', 'Диазинон', 'Опрыскивание', 'Диазинон', 'Контактты-ішек әсері бар инсектицид', 'Диазинон', 'Бүрку'])
       
       await query(`
-        INSERT INTO preparations (name, description, active_substance, application_method)
-        VALUES ($1, $2, $3, $4)
-      `, ['Децис', 'Высокоэффективный инсектицид', 'Делтаметрин', 'Опрыскивание'])
+        INSERT INTO preparations (name, description, active_substance, application_method, name_kk, description_kk, active_substance_kk, application_method_kk)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      `, ['Децис', 'Высокоэффективный инсектицид', 'Делтаметрин', 'Опрыскивание', 'Децис', 'Жоғары тиімді инсектицид', 'Делтаметрин', 'Бүрку'])
+    } else {
+      // Update existing records with Kazakh translations if they don't have them
+      const existingPreps = await query(`
+        SELECT id FROM preparations 
+        WHERE name_kk IS NULL OR description_kk IS NULL
+        LIMIT 2
+      `)
+      
+      if (existingPreps.rows.length > 0) {
+        for (let i = 0; i < existingPreps.rows.length; i++) {
+          const prepId = existingPreps.rows[i].id
+          if (i === 0) {
+            await query(`
+              UPDATE preparations 
+              SET name_kk = 'Диазинон',
+                  description_kk = 'Контактты-ішек әсері бар инсектицид',
+                  active_substance_kk = 'Диазинон',
+                  application_method_kk = 'Бүрку'
+              WHERE id = $1
+            `, [prepId])
+          } else if (i === 1) {
+            await query(`
+              UPDATE preparations 
+              SET name_kk = 'Децис',
+                  description_kk = 'Жоғары тиімді инсектицид',
+                  active_substance_kk = 'Делтаметрин',
+                  application_method_kk = 'Бүрку'
+              WHERE id = $1
+            `, [prepId])
+          }
+        }
+      }
     }
 
     // Update existing records without weather data

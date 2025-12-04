@@ -4,8 +4,20 @@ import { query } from '../../lib/database'
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {
+      const locale = req.headers['accept-language']?.includes('kk') ? 'kk' : 'ru'
       const result = await query('SELECT * FROM invasions ORDER BY year DESC')
-      res.status(200).json(result.rows)
+      
+      // Map results to use correct locale
+      const invasions = result.rows.map((invasion: any) => ({
+        id: invasion.id,
+        year: invasion.year,
+        title: locale === 'kk' && invasion.title_kk ? invasion.title_kk : invasion.title,
+        description: locale === 'kk' && invasion.description_kk ? invasion.description_kk : invasion.description,
+        region: locale === 'kk' && invasion.region_kk ? invasion.region_kk : invasion.region,
+        created_at: invasion.created_at
+      }))
+      
+      res.status(200).json(invasions)
     } catch (error) {
       console.error('Database error:', error)
       res.status(500).json({ error: 'Failed to fetch invasions' })

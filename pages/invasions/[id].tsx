@@ -26,7 +26,12 @@ export default function InvasionDetail() {
 
   useEffect(() => {
     if (id) {
-      fetch(`/api/invasions/${id}`)
+      const locale = router.locale || 'ru'
+      fetch(`/api/invasions/${id}`, {
+        headers: {
+          'Accept-Language': locale
+        }
+      })
         .then(res => {
           if (!res.ok) {
             throw new Error('Invasion not found')
@@ -42,7 +47,7 @@ export default function InvasionDetail() {
           setLoading(false)
         })
     }
-  }, [id])
+  }, [id, router.locale])
 
   if (loading) {
     return (

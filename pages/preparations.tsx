@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useRouter } from 'next/router'
 import Layout from '../components/Layout'
 import styles from '../styles/Preparations.module.css'
 
@@ -13,10 +14,16 @@ interface Preparation {
 
 export default function Preparations() {
   const { t } = useTranslation()
+  const router = useRouter()
   const [preparations, setPreparations] = useState<Preparation[]>([])
 
   useEffect(() => {
-    fetch('/api/preparations')
+    const locale = router.locale || 'ru'
+    fetch('/api/preparations', {
+      headers: {
+        'Accept-Language': locale
+      }
+    })
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -35,14 +42,14 @@ export default function Preparations() {
         setPreparations([
           {
             id: 1,
-            name: 'Диазинон',
-            description: 'Инсектицид контактно-кишечного действия для борьбы со стадными саранчовыми',
-            activeSubstance: 'Диазинон',
-            applicationMethod: 'Опрыскивание'
+            name: locale === 'kk' ? 'Диазинон' : 'Диазинон',
+            description: locale === 'kk' ? 'Контактты-ішек әсері бар инсектицид' : 'Инсектицид контактно-кишечного действия для борьбы со стадными саранчовыми',
+            activeSubstance: locale === 'kk' ? 'Диазинон' : 'Диазинон',
+            applicationMethod: locale === 'kk' ? 'Бүрку' : 'Опрыскивание'
           }
         ])
       })
-  }, [])
+  }, [router.locale])
 
   return (
     <Layout>

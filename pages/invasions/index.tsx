@@ -19,7 +19,12 @@ export default function Invasions() {
   const [invasions, setInvasions] = useState<Invasion[]>([])
 
   useEffect(() => {
-    fetch('/api/invasions')
+    const locale = router.locale || 'ru'
+    fetch('/api/invasions', {
+      headers: {
+        'Accept-Language': locale
+      }
+    })
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -33,13 +38,13 @@ export default function Invasions() {
           {
             id: 1,
             year: 2020,
-            title: 'Нашествие мароккской саранчи 2020',
-            description: 'Крупное нашествие мароккской саранчи в южных регионах Казахстана',
-            region: 'Южный Казахстан'
+            title: locale === 'kk' ? 'Марокко шегірткесінің шабуылы 2020' : 'Нашествие мароккской саранчи 2020',
+            description: locale === 'kk' ? 'Қазақстанның оңтүстік аймақтарында марокко шегірткесінің үлкен шабуылы' : 'Крупное нашествие мароккской саранчи в южных регионах Казахстана',
+            region: locale === 'kk' ? 'Оңтүстік Қазақстан' : 'Южный Казахстан'
           }
         ])
       })
-  }, [])
+  }, [router.locale])
 
   return (
     <Layout>
