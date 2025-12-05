@@ -39,6 +39,34 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         id
       ])
 
+      // Delete existing photos and links
+      await query('DELETE FROM preparation_photos WHERE preparation_id = $1', [id])
+      await query('DELETE FROM preparation_links WHERE preparation_id = $1', [id])
+
+      // Insert new photos (base64 data)
+      if (body.photos && Array.isArray(body.photos)) {
+        for (const photoData of body.photos) {
+          if (photoData && typeof photoData === 'string') {
+            await query(`
+              INSERT INTO preparation_photos (preparation_id, photo_path)
+              VALUES ($1, $2)
+            `, [id, photoData])
+          }
+        }
+      }
+
+      // Insert new links
+      if (body.links && Array.isArray(body.links)) {
+        for (const link of body.links) {
+          if (link.title && link.url) {
+            await query(`
+              INSERT INTO preparation_links (preparation_id, title, url)
+              VALUES ($1, $2, $3)
+            `, [id, link.title, link.url])
+          }
+        }
+      }
+
       res.status(200).json({ success: true })
     } catch (error: any) {
       console.error('Database error:', error)

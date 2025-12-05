@@ -10,6 +10,8 @@ interface Preparation {
   description: string
   activeSubstance?: string
   applicationMethod?: string
+  photos?: string[]
+  links?: Array<{ title: string; url: string }>
 }
 
 export default function Preparations() {
@@ -32,7 +34,9 @@ export default function Preparations() {
             name: prep.name,
             description: prep.description,
             activeSubstance: prep.active_substance,
-            applicationMethod: prep.application_method
+            applicationMethod: prep.application_method,
+            photos: prep.photos || [],
+            links: prep.links || []
           })))
         }
       })
@@ -61,6 +65,18 @@ export default function Preparations() {
           {preparations.length > 0 ? (
             preparations.map((prep) => (
               <div key={prep.id} className={styles.preparationCard}>
+                {prep.photos && prep.photos.length > 0 && (
+                  <div className={styles.preparationPhotos}>
+                    {prep.photos.map((photo, index) => (
+                      <img
+                        key={index}
+                        src={photo}
+                        alt={`${prep.name} - ${t('preparations.photo', { number: index + 1 })}`}
+                        className={styles.preparationPhoto}
+                      />
+                    ))}
+                  </div>
+                )}
                 <h3 className={styles.preparationName}>{prep.name}</h3>
                 <p className={styles.preparationDescription}>{prep.description}</p>
                 {prep.activeSubstance && (
@@ -72,6 +88,21 @@ export default function Preparations() {
                   <p className={styles.preparationDetail}>
                     <strong>{t('preparations.applicationMethod')}:</strong> {prep.applicationMethod}
                   </p>
+                )}
+                {prep.links && prep.links.length > 0 && (
+                  <div className={styles.preparationLinks}>
+                    {prep.links.map((link, index) => (
+                      <a
+                        key={index}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.preparationLink}
+                      >
+                        {link.title || link.url}
+                      </a>
+                    ))}
+                  </div>
                 )}
               </div>
             ))
