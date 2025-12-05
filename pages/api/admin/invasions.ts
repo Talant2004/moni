@@ -20,6 +20,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const longitude = body.longitude ? parseFloat(body.longitude) : null
       const threat_level = body.threat_level === true || body.threat_level === 'true'
       const treated_area = body.treated_area === true || body.treated_area === 'true'
+      const temperature = body.temperature ? parseFloat(body.temperature) : null
+      const precipitation = body.precipitation ? parseFloat(body.precipitation) : null
+      const humidity = body.humidity ? parseFloat(body.humidity) : null
+      const wind_speed = body.wind_speed ? parseFloat(body.wind_speed) : null
 
       // Insert invasion
       const result = await query(`
@@ -57,8 +61,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Insert map data if coordinates provided
       if (latitude && longitude) {
         await query(`
-          INSERT INTO map_data (region, district, year, season, latitude, longitude, threat_level, treated_area)
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+          INSERT INTO map_data (region, district, year, season, latitude, longitude, threat_level, treated_area, temperature, precipitation, humidity, wind_speed)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
         `, [
           region,
           district,
@@ -67,7 +71,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           latitude,
           longitude,
           threat_level ? 1 : 0,
-          treated_area ? 1 : 0
+          treated_area ? 1 : 0,
+          temperature,
+          precipitation,
+          humidity,
+          wind_speed
         ])
       }
 

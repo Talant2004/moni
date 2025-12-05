@@ -20,10 +20,10 @@ interface InvasionData {
   longitude: number | null
   threat_level: boolean
   treated_area: boolean
-  temperature: boolean
-  precipitation: boolean
-  humidity: boolean
-  wind_speed: boolean
+  temperature: number | null
+  precipitation: number | null
+  humidity: number | null
+  wind_speed: number | null
   photos: File[]
   links: Array<{ title: string; url: string }>
   kml_file: File | null
@@ -44,12 +44,12 @@ export default function InvasionForm() {
     full_text_kk: '',
     latitude: null,
     longitude: null,
-    threat_level: false,
-    treated_area: false,
-    temperature: false,
-    precipitation: false,
-    humidity: false,
-    wind_speed: false,
+          threat_level: false,
+          treated_area: false,
+          temperature: null,
+          precipitation: null,
+          humidity: null,
+          wind_speed: null,
     photos: [],
     links: [{ title: '', url: '' }],
     kml_file: null
@@ -160,10 +160,10 @@ export default function InvasionForm() {
           longitude: null,
           threat_level: false,
           treated_area: false,
-          temperature: false,
-          precipitation: false,
-          humidity: false,
-          wind_speed: false,
+          temperature: null,
+          precipitation: null,
+          humidity: null,
+          wind_speed: null,
           photos: [],
           links: [{ title: '', url: '' }],
           kml_file: null
@@ -340,40 +340,56 @@ export default function InvasionForm() {
         </div>
       </div>
 
-      <div className={styles.checkboxGroup}>
+      <div className={styles.field}>
         <h3>{t('admin.invasions.weather_data')}</h3>
-        <label className={styles.checkbox}>
-          <input
-            type="checkbox"
-            checked={formData.temperature}
-            onChange={(e) => handleChange('temperature', e.target.checked)}
-          />
-          {t('maps.weatherTemperature')}
-        </label>
-        <label className={styles.checkbox}>
-          <input
-            type="checkbox"
-            checked={formData.precipitation}
-            onChange={(e) => handleChange('precipitation', e.target.checked)}
-          />
-          {t('maps.weatherPrecipitation')}
-        </label>
-        <label className={styles.checkbox}>
-          <input
-            type="checkbox"
-            checked={formData.humidity}
-            onChange={(e) => handleChange('humidity', e.target.checked)}
-          />
-          {t('maps.weatherHumidity')}
-        </label>
-        <label className={styles.checkbox}>
-          <input
-            type="checkbox"
-            checked={formData.wind_speed}
-            onChange={(e) => handleChange('wind_speed', e.target.checked)}
-          />
-          {t('maps.weatherWind')}
-        </label>
+        <div className={styles.row}>
+          <div className={styles.field}>
+            <label>{t('maps.weatherTemperature')} (°C)</label>
+            <input
+              type="number"
+              step="0.1"
+              value={formData.temperature ?? ''}
+              onChange={(e) => handleChange('temperature', e.target.value ? parseFloat(e.target.value) : null)}
+              placeholder="Например: 25.5"
+              className={styles.input}
+            />
+          </div>
+          <div className={styles.field}>
+            <label>{t('maps.weatherPrecipitation')} (мм)</label>
+            <input
+              type="number"
+              step="0.1"
+              value={formData.precipitation ?? ''}
+              onChange={(e) => handleChange('precipitation', e.target.value ? parseFloat(e.target.value) : null)}
+              placeholder="Например: 10.5"
+              className={styles.input}
+            />
+          </div>
+        </div>
+        <div className={styles.row}>
+          <div className={styles.field}>
+            <label>{t('maps.weatherHumidity')} (%)</label>
+            <input
+              type="number"
+              step="0.1"
+              value={formData.humidity ?? ''}
+              onChange={(e) => handleChange('humidity', e.target.value ? parseFloat(e.target.value) : null)}
+              placeholder="Например: 65.0"
+              className={styles.input}
+            />
+          </div>
+          <div className={styles.field}>
+            <label>{t('maps.weatherWind')} (м/с)</label>
+            <input
+              type="number"
+              step="0.1"
+              value={formData.wind_speed ?? ''}
+              onChange={(e) => handleChange('wind_speed', e.target.value ? parseFloat(e.target.value) : null)}
+              placeholder="Например: 5.2"
+              className={styles.input}
+            />
+          </div>
+        </div>
       </div>
 
       <div className={styles.checkboxGroup}>
